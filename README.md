@@ -170,6 +170,10 @@ More coming soon
 
 ## History
 This project was forked from https://github.com/jordanbray/chess, as of `91fe8e2`.
+Several unmerged PRs have been added into this version - the author on these commits has been set to reflect the actual author.
+
+Some of the current improvements over https://github.com/jordanbray/chess:
+ - Build times are _drastically_ improved. rust-analyzer actually works now (thanks KarelPeeters) - still room for improvement here.
 
 ## Is it any good?
 
