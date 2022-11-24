@@ -175,4 +175,4 @@ fn run_perft(c: &mut Criterion) {
     group.bench_function("26", |b| b.iter(|| movegen_perft_26()));
 }
 
-criterion_group!(all, run_perft);
+criterion_group!(perft, run_perft);

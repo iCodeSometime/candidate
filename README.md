@@ -175,7 +175,7 @@ Maintaining backwards compatibility with the `chess` crate is a non-goal. Expect
 
 Some of the improvements made since the fork:
  - Build times are _drastically_ improved. rust-analyzer actually works now (thanks KarelPeeters)
- - Checking the status of the board is much faster (thanks AlexanderHarrison)
+ - Checking the `status` of the `Board` is 2-3x faster for a fully populated board (thanks AlexanderHarrison)
  - Performance benchmarks added
 
 ## Is it any good?

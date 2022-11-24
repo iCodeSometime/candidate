@@ -277,7 +277,6 @@ impl MoveGen {
         }
     }
 
-    #[cfg(test)]
     /// Do a perft test after splitting the moves up into two groups
     pub fn movegen_perft_test_piecewise(board: &Board, depth: usize) -> usize {
         let mut iterable = MoveGen::new_legal(board);

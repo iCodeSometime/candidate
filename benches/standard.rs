@@ -3,5 +3,6 @@ use criterion::criterion_main;
 mod benchmarks;
 
 criterion_main! {
-  benchmarks::perft::all
+  benchmarks::perft::perft,
+  benchmarks::board::board,
 }
