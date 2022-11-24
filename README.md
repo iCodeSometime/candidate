@@ -169,7 +169,7 @@ More coming soon
  https://jordanbray.github.io/chess/chess/.
 
 ## History
-This project was forked from https://github.com/jordanbray/chess, as of `d00e992`.
+This project was forked from https://github.com/jordanbray/chess, as of `91fe8e2`.
 
 ## Is it any good?
 
