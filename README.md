@@ -1,16 +1,13 @@
 # A Fast Chess Library In Rust
-
+<!--
 [![Build Status](https://travis-ci.org/jordanbray/chess.svg?branch=master)](https://travis-ci.org/jordanbray/chess)
 [![crates.io](https://img.shields.io/crates/v/chess.svg)](https://crates.io/crates/chess)
 [![docs.rs](https://docs.rs/chess/badge.svg)](https://jordanbray.github.io/chess/chess/)
+-->
 
 This library handles the process of move generation within a chess engine or chess UI.
 
-This library follows semver for version numbering in the format MAJOR.MINOR.PATCH.  That means:
-
-* Any change to the API that breaks existing code will involve a MAJOR version number change.
-* Any added functionality or features that do not break existing applications will involve a MINOR version number change.
-* Any bug fixes or performance improvements that do not affect users will involve a PATCH version change.
+This is a library to manage chess game state and move generation.
 
 ## Requires Rust 1.31 or Greater
 
@@ -142,7 +139,7 @@ When compiling, I definitely recommend using RUSTFLAGS="-C target-cpu=native", s
 
 ## BMI2
 
-As of version 1.0.3 of this library, the BMI2 instruction-set is used on machines that support it.  This speeds up the logic in two ways:
+The BMI2 instruction-set is used on machines that support it.  This speeds up the logic in two ways:
 * It uses built-in instructions to do the same logic that magic bitboards do.
 * It reduces cache load by storing moves in a u16 rather than a u64, which can be decompressed to a u64 with a single instruction.
 
@@ -165,11 +162,16 @@ This library has very fast move generation (the primary purposes of its existanc
 
 This is not a chess engine, just the move generator.  This is not a chess UI, just the move generator.  This is not a chess PGN parser, database, UCI communicator, XBOARD/WinBoard protocol, website or grandmaster.  Just a humble move generator.
 
+More coming soon
+
 ## API Documentation
 
-... is available at https://jordanbray.github.io/chess/chess/.
+ https://jordanbray.github.io/chess/chess/.
 
-## Anything Else
+## History
+This project was forked from https://github.com/jordanbray/chess, as of `d00e992`.
 
-Nope.  Have fun.
+## Is it any good?
+
+[Yes](https://news.ycombinator.com/item?id=3067434)
 
