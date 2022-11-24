@@ -173,8 +173,9 @@ This project was forked from https://github.com/jordanbray/chess, as of `91fe8e2
 Several unmerged PRs have been added into this version - the author on these commits has been set to reflect the actual author.
 Maintaining backwards compatibility with the `chess` crate is a non-goal. Expect breaking changes until 1.0.
 
-Some of the current improvements over https://github.com/jordanbray/chess:
- - Build times are _drastically_ improved. rust-analyzer actually works now (thanks KarelPeeters) - still room for improvement here.
+Some of the improvements made since the fork:
+ - Build times are _drastically_ improved. rust-analyzer actually works now (thanks KarelPeeters)
+ - Checking the status of the board is much faster (thanks AlexanderHarrison)
 
 ## Is it any good?
 
