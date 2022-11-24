@@ -40,3 +40,10 @@ opt-level = 3
 [build-dependencies]
 rand = { version = "0.7.2", default_features = false, features = ["small_rng"] }
 failure = "0.1.6"
+
+[dev-dependencies]
+criterion = "0.3"
+
+[[bench]]
+name = "standard"
+harness = false
