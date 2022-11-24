@@ -42,7 +42,7 @@ impl Piece {
     /// lowercase.
     ///
     /// ```
-    /// use chess::{Piece, Color};
+    /// use candidate::{Piece, Color};
     ///
     /// assert_eq!(Piece::King.to_string(Color::White), "K");
     /// assert_eq!(Piece::Knight.to_string(Color::Black), "n");

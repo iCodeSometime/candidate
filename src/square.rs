@@ -16,7 +16,7 @@ impl Default for Square {
     /// Create a square on A1.
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// let explicit_sq = Square::make_square(Rank::First, File::A);
     /// let implicit_sq = Square::default();
@@ -34,7 +34,7 @@ impl Square {
     ///
     /// ```
     ///
-    /// use chess::{Square, Rank, File, EMPTY};
+    /// use candidate::{Square, Rank, File, EMPTY};
     ///
     /// assert_eq!(unsafe { Square::new(0) }, Square::default());
     ///
@@ -53,7 +53,7 @@ impl Square {
     /// Make a square given a rank and a file
     ///
     /// ```
-    /// use chess::{Square, Rank, File, BitBoard};
+    /// use candidate::{Square, Rank, File, BitBoard};
     ///
     /// // Make the A1 square
     /// let sq = Square::make_square(Rank::First, File::A);
@@ -75,7 +75,7 @@ impl Square {
     /// Return the rank given this square.
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// let sq = Square::make_square(Rank::Seventh, File::D);
     ///
@@ -89,7 +89,7 @@ impl Square {
     /// Return the file given this square.
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// let sq = Square::make_square(Rank::Seventh, File::D);
     ///
@@ -103,7 +103,7 @@ impl Square {
     /// If there is a square above me, return that.  Otherwise, None.
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// let sq = Square::make_square(Rank::Seventh, File::D);
     ///
@@ -123,7 +123,7 @@ impl Square {
     /// If there is a square below me, return that.  Otherwise, None.
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// let sq = Square::make_square(Rank::Second, File::D);
     ///
@@ -143,7 +143,7 @@ impl Square {
     /// If there is a square to the left of me, return that.  Otherwise, None.
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// let sq = Square::make_square(Rank::Seventh, File::B);
     ///
@@ -163,7 +163,7 @@ impl Square {
     /// If there is a square to the right of me, return that.  Otherwise, None.
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// let sq = Square::make_square(Rank::Seventh, File::G);
     ///
@@ -186,7 +186,7 @@ impl Square {
     /// If there is a square "forward", given my `Color`, go in that direction.  Otherwise, None.
     ///
     /// ```
-    /// use chess::{Square, Rank, File, Color};
+    /// use candidate::{Square, Rank, File, Color};
     ///
     /// let mut sq = Square::make_square(Rank::Seventh, File::D);
     ///
@@ -209,7 +209,7 @@ impl Square {
     /// If there is a square "backward" given my `Color`, go in that direction.  Otherwise, None.
     ///
     /// ```
-    /// use chess::{Square, Rank, File, Color};
+    /// use candidate::{Square, Rank, File, Color};
     ///
     /// let mut sq = Square::make_square(Rank::Seventh, File::D);
     ///
@@ -232,7 +232,7 @@ impl Square {
     /// If there is a square above me, return that.  If not, wrap around to the other side.
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// let sq = Square::make_square(Rank::Seventh, File::D);
     ///
@@ -248,7 +248,7 @@ impl Square {
     /// If there is a square below me, return that.  If not, wrap around to the other side.
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// let sq = Square::make_square(Rank::Second, File::D);
     ///
@@ -264,7 +264,7 @@ impl Square {
     /// If there is a square to the left of me, return that. If not, wrap around to the other side.
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// let sq = Square::make_square(Rank::Seventh, File::B);
     ///
@@ -281,7 +281,7 @@ impl Square {
     /// side.
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// let sq = Square::make_square(Rank::Seventh, File::G);
     ///
@@ -298,7 +298,7 @@ impl Square {
     /// other side.
     ///
     /// ```
-    /// use chess::{Square, Rank, File, Color};
+    /// use candidate::{Square, Rank, File, Color};
     ///
     /// let mut sq = Square::make_square(Rank::Seventh, File::D);
     ///
@@ -322,7 +322,7 @@ impl Square {
     /// other side.
     ///
     /// ```
-    /// use chess::{Square, Rank, File, Color};
+    /// use candidate::{Square, Rank, File, Color};
     ///
     /// let mut sq = Square::make_square(Rank::Seventh, File::D);
     ///
@@ -345,7 +345,7 @@ impl Square {
     /// Convert this square to an integer.
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::make_square(Rank::First, File::A).to_int(), 0);
     /// assert_eq!(Square::make_square(Rank::Second, File::A).to_int(), 8);
@@ -360,7 +360,7 @@ impl Square {
     /// Convert this `Square` to a `usize` for table lookup purposes
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::make_square(Rank::First, File::A).to_index(), 0);
     /// assert_eq!(Square::make_square(Rank::Second, File::A).to_index(), 8);
@@ -375,7 +375,7 @@ impl Square {
     /// Convert a UCI `String` to a square.  If invalid, return `None`
     ///
     /// ```
-    /// use chess::Square;
+    /// use candidate::Square;
     ///
     /// let sq = Square::default();
     ///
@@ -392,7 +392,7 @@ impl Square {
     /// The A1 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::A1, Square::make_square(Rank::First, File::A));
     /// ```
@@ -401,7 +401,7 @@ impl Square {
     /// The B1 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::B1, Square::make_square(Rank::First, File::B));
     /// ```
@@ -410,7 +410,7 @@ impl Square {
     /// The C1 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::C1, Square::make_square(Rank::First, File::C));
     /// ```
@@ -419,7 +419,7 @@ impl Square {
     /// The D1 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::D1, Square::make_square(Rank::First, File::D));
     /// ```
@@ -428,7 +428,7 @@ impl Square {
     /// The E1 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::E1, Square::make_square(Rank::First, File::E));
     /// ```
@@ -437,7 +437,7 @@ impl Square {
     /// The F1 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::F1, Square::make_square(Rank::First, File::F));
     /// ```
@@ -446,7 +446,7 @@ impl Square {
     /// The G1 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::G1, Square::make_square(Rank::First, File::G));
     /// ```
@@ -455,7 +455,7 @@ impl Square {
     /// The H1 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::H1, Square::make_square(Rank::First, File::H));
     /// ```
@@ -464,7 +464,7 @@ impl Square {
     /// The A2 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::A2, Square::make_square(Rank::Second, File::A));
     /// ```
@@ -473,7 +473,7 @@ impl Square {
     /// The B2 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::B2, Square::make_square(Rank::Second, File::B));
     /// ```
@@ -482,7 +482,7 @@ impl Square {
     /// The C2 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::C2, Square::make_square(Rank::Second, File::C));
     /// ```
@@ -491,7 +491,7 @@ impl Square {
     /// The D2 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::D2, Square::make_square(Rank::Second, File::D));
     /// ```
@@ -500,7 +500,7 @@ impl Square {
     /// The E2 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::E2, Square::make_square(Rank::Second, File::E));
     /// ```
@@ -509,7 +509,7 @@ impl Square {
     /// The F2 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::F2, Square::make_square(Rank::Second, File::F));
     /// ```
@@ -518,7 +518,7 @@ impl Square {
     /// The G2 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::G2, Square::make_square(Rank::Second, File::G));
     /// ```
@@ -527,7 +527,7 @@ impl Square {
     /// The H2 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::H2, Square::make_square(Rank::Second, File::H));
     /// ```
@@ -536,7 +536,7 @@ impl Square {
     /// The A3 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::A3, Square::make_square(Rank::Third, File::A));
     /// ```
@@ -545,7 +545,7 @@ impl Square {
     /// The B3 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::B3, Square::make_square(Rank::Third, File::B));
     /// ```
@@ -554,7 +554,7 @@ impl Square {
     /// The C3 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::C3, Square::make_square(Rank::Third, File::C));
     /// ```
@@ -563,7 +563,7 @@ impl Square {
     /// The D3 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::D3, Square::make_square(Rank::Third, File::D));
     /// ```
@@ -572,7 +572,7 @@ impl Square {
     /// The E3 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::E3, Square::make_square(Rank::Third, File::E));
     /// ```
@@ -581,7 +581,7 @@ impl Square {
     /// The F3 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::F3, Square::make_square(Rank::Third, File::F));
     /// ```
@@ -590,7 +590,7 @@ impl Square {
     /// The G3 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::G3, Square::make_square(Rank::Third, File::G));
     /// ```
@@ -599,7 +599,7 @@ impl Square {
     /// The H3 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::H3, Square::make_square(Rank::Third, File::H));
     /// ```
@@ -608,7 +608,7 @@ impl Square {
     /// The A4 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::A4, Square::make_square(Rank::Fourth, File::A));
     /// ```
@@ -617,7 +617,7 @@ impl Square {
     /// The B4 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::B4, Square::make_square(Rank::Fourth, File::B));
     /// ```
@@ -626,7 +626,7 @@ impl Square {
     /// The C4 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::C4, Square::make_square(Rank::Fourth, File::C));
     /// ```
@@ -635,7 +635,7 @@ impl Square {
     /// The D4 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::D4, Square::make_square(Rank::Fourth, File::D));
     /// ```
@@ -644,7 +644,7 @@ impl Square {
     /// The E4 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::E4, Square::make_square(Rank::Fourth, File::E));
     /// ```
@@ -653,7 +653,7 @@ impl Square {
     /// The F4 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::F4, Square::make_square(Rank::Fourth, File::F));
     /// ```
@@ -662,7 +662,7 @@ impl Square {
     /// The G4 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::G4, Square::make_square(Rank::Fourth, File::G));
     /// ```
@@ -671,7 +671,7 @@ impl Square {
     /// The H4 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::H4, Square::make_square(Rank::Fourth, File::H));
     /// ```
@@ -680,7 +680,7 @@ impl Square {
     /// The A5 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::A5, Square::make_square(Rank::Fifth, File::A));
     /// ```
@@ -689,7 +689,7 @@ impl Square {
     /// The B5 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::B5, Square::make_square(Rank::Fifth, File::B));
     /// ```
@@ -698,7 +698,7 @@ impl Square {
     /// The C5 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::C5, Square::make_square(Rank::Fifth, File::C));
     /// ```
@@ -707,7 +707,7 @@ impl Square {
     /// The D5 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::D5, Square::make_square(Rank::Fifth, File::D));
     /// ```
@@ -716,7 +716,7 @@ impl Square {
     /// The E5 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::E5, Square::make_square(Rank::Fifth, File::E));
     /// ```
@@ -725,7 +725,7 @@ impl Square {
     /// The F5 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::F5, Square::make_square(Rank::Fifth, File::F));
     /// ```
@@ -734,7 +734,7 @@ impl Square {
     /// The G5 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::G5, Square::make_square(Rank::Fifth, File::G));
     /// ```
@@ -743,7 +743,7 @@ impl Square {
     /// The H5 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::H5, Square::make_square(Rank::Fifth, File::H));
     /// ```
@@ -752,7 +752,7 @@ impl Square {
     /// The A6 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::A6, Square::make_square(Rank::Sixth, File::A));
     /// ```
@@ -761,7 +761,7 @@ impl Square {
     /// The B6 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::B6, Square::make_square(Rank::Sixth, File::B));
     /// ```
@@ -770,7 +770,7 @@ impl Square {
     /// The C6 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::C6, Square::make_square(Rank::Sixth, File::C));
     /// ```
@@ -779,7 +779,7 @@ impl Square {
     /// The D6 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::D6, Square::make_square(Rank::Sixth, File::D));
     /// ```
@@ -788,7 +788,7 @@ impl Square {
     /// The E6 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::E6, Square::make_square(Rank::Sixth, File::E));
     /// ```
@@ -797,7 +797,7 @@ impl Square {
     /// The F6 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::F6, Square::make_square(Rank::Sixth, File::F));
     /// ```
@@ -806,7 +806,7 @@ impl Square {
     /// The G6 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::G6, Square::make_square(Rank::Sixth, File::G));
     /// ```
@@ -815,7 +815,7 @@ impl Square {
     /// The H6 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::H6, Square::make_square(Rank::Sixth, File::H));
     /// ```
@@ -824,7 +824,7 @@ impl Square {
     /// The A7 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::A7, Square::make_square(Rank::Seventh, File::A));
     /// ```
@@ -833,7 +833,7 @@ impl Square {
     /// The B7 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::B7, Square::make_square(Rank::Seventh, File::B));
     /// ```
@@ -842,7 +842,7 @@ impl Square {
     /// The C7 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::C7, Square::make_square(Rank::Seventh, File::C));
     /// ```
@@ -851,7 +851,7 @@ impl Square {
     /// The D7 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::D7, Square::make_square(Rank::Seventh, File::D));
     /// ```
@@ -860,7 +860,7 @@ impl Square {
     /// The E7 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::E7, Square::make_square(Rank::Seventh, File::E));
     /// ```
@@ -869,7 +869,7 @@ impl Square {
     /// The F7 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::F7, Square::make_square(Rank::Seventh, File::F));
     /// ```
@@ -878,7 +878,7 @@ impl Square {
     /// The G7 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::G7, Square::make_square(Rank::Seventh, File::G));
     /// ```
@@ -887,7 +887,7 @@ impl Square {
     /// The H7 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::H7, Square::make_square(Rank::Seventh, File::H));
     /// ```
@@ -896,7 +896,7 @@ impl Square {
     /// The A8 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::A8, Square::make_square(Rank::Eighth, File::A));
     /// ```
@@ -905,7 +905,7 @@ impl Square {
     /// The B8 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::B8, Square::make_square(Rank::Eighth, File::B));
     /// ```
@@ -914,7 +914,7 @@ impl Square {
     /// The C8 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::C8, Square::make_square(Rank::Eighth, File::C));
     /// ```
@@ -923,7 +923,7 @@ impl Square {
     /// The D8 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::D8, Square::make_square(Rank::Eighth, File::D));
     /// ```
@@ -932,7 +932,7 @@ impl Square {
     /// The E8 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::E8, Square::make_square(Rank::Eighth, File::E));
     /// ```
@@ -941,7 +941,7 @@ impl Square {
     /// The F8 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::F8, Square::make_square(Rank::Eighth, File::F));
     /// ```
@@ -950,7 +950,7 @@ impl Square {
     /// The G8 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::G8, Square::make_square(Rank::Eighth, File::G));
     /// ```
@@ -959,7 +959,7 @@ impl Square {
     /// The H8 square on the chess board
     ///
     /// ```
-    /// use chess::{Square, Rank, File};
+    /// use candidate::{Square, Rank, File};
     ///
     /// assert_eq!(Square::H8, Square::make_square(Rank::Eighth, File::H));
     /// ```
@@ -1007,7 +1007,7 @@ impl FromStr for Square {
 /// A list of every square on the chessboard.
 ///
 /// ```
-/// use chess::{ALL_SQUARES, BitBoard, EMPTY};
+/// use candidate::{ALL_SQUARES, BitBoard, EMPTY};
 ///
 /// let universe = !EMPTY;
 ///

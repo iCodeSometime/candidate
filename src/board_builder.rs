@@ -21,7 +21,7 @@ use std::str::FromStr;
 /// * You want to convert between formats like FEN.
 ///
 /// ```
-/// use chess::{BoardBuilder, Board, Square, Color, Piece};
+/// use candidate::{BoardBuilder, Board, Square, Color, Piece};
 /// use std::convert::TryFrom;
 /// let mut position = BoardBuilder::new();
 /// position.piece(Square::A1, Piece::King, Color::White);
@@ -63,10 +63,10 @@ impl BoardBuilder {
     /// * `en_passant` is not set
     /// * `side_to_move` is Color::White
     /// ```
-    /// use chess::{BoardBuilder, Board, Square, Color, Piece};
+    /// use candidate::{BoardBuilder, Board, Square, Color, Piece};
     /// use std::convert::TryInto;
     ///
-    /// # use chess::Error;
+    /// # use candidate::Error;
     /// # fn main() -> Result<(), Error> {
     /// let board: Board = BoardBuilder::new()
     ///     .piece(Square::A1, Piece::King, Color::White)
@@ -87,10 +87,10 @@ impl BoardBuilder {
     /// Set up a board with everything pre-loaded.
     ///
     /// ```
-    /// use chess::{BoardBuilder, Board, Square, Color, Piece, CastleRights};
+    /// use candidate::{BoardBuilder, Board, Square, Color, Piece, CastleRights};
     /// use std::convert::TryInto;
     ///
-    /// # use chess::Error;
+    /// # use candidate::Error;
     /// # fn main() -> Result<(), Error> {
     /// let board: Board = BoardBuilder::setup(
     ///         &[
@@ -128,7 +128,7 @@ impl BoardBuilder {
     /// Get the current player
     ///
     /// ```
-    /// use chess::{BoardBuilder, Board, Color};
+    /// use candidate::{BoardBuilder, Board, Color};
     ///
     /// let bb: BoardBuilder = Board::default().into();
     /// assert_eq!(bb.get_side_to_move(), Color::White);
@@ -140,7 +140,7 @@ impl BoardBuilder {
     /// Get the castle rights for a player
     ///
     /// ```
-    /// use chess::{BoardBuilder, Board, CastleRights, Color};
+    /// use candidate::{BoardBuilder, Board, CastleRights, Color};
     ///
     /// let bb: BoardBuilder = Board::default().into();
     /// assert_eq!(bb.get_castle_rights(Color::White), CastleRights::Both);
@@ -152,7 +152,7 @@ impl BoardBuilder {
     /// Get the current en_passant square
     ///
     /// ```
-    /// use chess::{BoardBuilder, Board, Square, ChessMove};
+    /// use candidate::{BoardBuilder, Board, Square, ChessMove};
     ///
     /// let board = Board::default()
     ///     .make_move_new(ChessMove::new(Square::E2, Square::E4, None))
@@ -172,7 +172,7 @@ impl BoardBuilder {
     /// This function can be used on self directly or in a builder pattern.
     ///
     /// ```
-    /// use chess::{BoardBuilder, Color};
+    /// use candidate::{BoardBuilder, Color};
     /// BoardBuilder::new()
     ///              .side_to_move(Color::Black);      
     ///
@@ -189,7 +189,7 @@ impl BoardBuilder {
     /// This function can be used on self directly or in a builder pattern.
     ///
     /// ```
-    /// use chess::{BoardBuilder, Color, CastleRights};
+    /// use candidate::{BoardBuilder, Color, CastleRights};
     /// BoardBuilder::new()
     ///              .castle_rights(Color::White, CastleRights::NoRights);
     ///
@@ -214,7 +214,7 @@ impl BoardBuilder {
     /// This function can be used on self directly or in a builder pattern.
     ///
     /// ```
-    /// use chess::{BoardBuilder, Color, Square, Piece};
+    /// use candidate::{BoardBuilder, Color, Square, Piece};
     ///
     /// BoardBuilder::new()
     ///              .piece(Square::A1, Piece::Rook, Color::White);
@@ -234,7 +234,7 @@ impl BoardBuilder {
     /// This function can be used on self directly or in a builder pattern.
     ///
     /// ```
-    /// use chess::{BoardBuilder, Square, Board};
+    /// use candidate::{BoardBuilder, Square, Board};
     ///
     /// let mut bb: BoardBuilder = Board::default().into();
     /// bb.clear_square(Square::A1);
@@ -249,7 +249,7 @@ impl BoardBuilder {
     /// This function can be used directly or in a builder pattern.
     ///
     /// ```
-    /// use chess::{BoardBuilder, Square, Board, File, Color, Piece};
+    /// use candidate::{BoardBuilder, Square, Board, File, Color, Piece};
     ///
     /// BoardBuilder::new()
     ///              .piece(Square::E4, Piece::Pawn, Color::White)

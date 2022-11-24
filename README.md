@@ -22,9 +22,9 @@ This library requires rust version 1.27 or greater in order to check for the BMI
 Here we iterate over all moves with incremental move generation.  The iterator below will generate moves as you are going through the list, which is ideal for situations where not all moves will be looked at (such as in an engine search function).
 
 ```rust
-  use chess::MoveGen;
-  use chess::Board;
-  use chess::EMPTY;
+  use candidate::MoveGen;
+  use candidate::Board;
+  use candidate::EMPTY;
 
   // create a board with the initial position
   let board = Board::default();
@@ -64,7 +64,7 @@ The `Board` structure tries to keep the position legal at all times.  This can b
 To deal with this, the `BoardBuilder` structure was introduced in 3.1.0. `BoardBuilder` structure follows a non-consuming builder pattern and can be converted to a `Result<Board, Error>` via `Board::try_from(...)` or `board_builder.try_into()`.
 
 ```rust
-  use chess::{Board, BoardBuilder, Piece, Square, Color};
+  use candidate::{Board, BoardBuilder, Piece, Square, Color};
   use std::convert::TryInto;
 
   let mut board_builder = BoardBuilder::new();
@@ -80,7 +80,7 @@ To deal with this, the `BoardBuilder` structure was introduced in 3.1.0. `BoardB
 Here we make a move on the chess board.  The board is a copy-on-make structure, meaning every time you make a move, you create a new chess board.  You can use `board.make_move()` to update the current position, but you cannot unmake the move.  The board structure is optimized for size to reduce copy-time.
 
 ```rust
-  use chess::{Board, ChessMove, Square, Color};
+  use candidate::{Board, ChessMove, Square, Color};
 
   let m = ChessMove::new(Square::D2, Square::D4, None);
 
@@ -93,7 +93,7 @@ Here we make a move on the chess board.  The board is a copy-on-make structure, 
 There is more to chess than just what is on the board.  The `Game` object keeps track of the history of the game to allow draw offers, resignations, draw by 50 move rule, draw by repetition, and in general anything that needs the history of the game.
 
 ```rust
-  use chess::{Game, Square, ChessMove};
+  use candidate::{Game, Square, ChessMove};
 
   let b1c3 = ChessMove::new(Square::B1, Square::C3, None);
   let c3b1 = ChessMove::new(Square::C3, Square::B1, None);
@@ -123,7 +123,7 @@ There is more to chess than just what is on the board.  The `Game` object keeps 
 `BoardBuilder`, `Board`, and `Game` all implement `FromStr` to allow you to convert an FEN string into the object.  Additionally, `BoardBuilder` and `Board` implement `std::fmt::Display` to convert them into an FEN string.
 
 ```rust
-  use chess::Board;
+  use candidate::Board;
   use std::str::FromStr;
   
   assert_eq!(
@@ -171,6 +171,7 @@ More coming soon
 ## History
 This project was forked from https://github.com/jordanbray/chess, as of `91fe8e2`.
 Several unmerged PRs have been added into this version - the author on these commits has been set to reflect the actual author.
+Maintaining backwards compatibility with the `chess` crate is a non-goal. Expect breaking changes until 1.0.
 
 Some of the current improvements over https://github.com/jordanbray/chess:
  - Build times are _drastically_ improved. rust-analyzer actually works now (thanks KarelPeeters) - still room for improvement here.

@@ -10,7 +10,7 @@
 //!
 //! ```
 //!
-//! use chess::{Board, MoveGen};
+//! use candidate::{Board, MoveGen};
 //!
 //! let board = Board::default();
 //! let movegen = MoveGen::new_legal(&board);

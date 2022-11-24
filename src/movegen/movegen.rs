@@ -47,10 +47,10 @@ pub type MoveList = NoDrop<ArrayVec<[SquareAndBitBoard; 18]>>;
 /// # Examples
 ///
 /// ```
-/// use chess::MoveGen;
-/// use chess::Board;
-/// use chess::EMPTY;
-/// use chess::construct;
+/// use candidate::MoveGen;
+/// use candidate::Board;
+/// use candidate::EMPTY;
+/// use candidate::construct;
 ///
 /// // create a board with the initial position
 /// let board = Board::default();

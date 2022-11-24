@@ -77,9 +77,9 @@ impl Board {
     /// Construct a board from a FEN string.
     ///
     /// ```
-    /// use chess::Board;
+    /// use candidate::Board;
     /// use std::str::FromStr;
-    /// # use chess::Error;
+    /// # use candidate::Error;
     ///
     /// # fn main() -> Result<(), Error> {
     ///
@@ -117,7 +117,7 @@ impl Board {
     /// Is this game Ongoing, is it Stalemate, or is it Checkmate?
     ///
     /// ```
-    /// use chess::{Board, BoardStatus, Square, ChessMove};
+    /// use candidate::{Board, BoardStatus, Square, ChessMove};
     ///
     /// let mut board = Board::default();
     ///
@@ -171,7 +171,7 @@ impl Board {
     /// Grab the "combined" `BitBoard`.  This is a `BitBoard` with every piece.
     ///
     /// ```
-    /// use chess::{Board, BitBoard, Rank, get_rank};
+    /// use candidate::{Board, BitBoard, Rank, get_rank};
     ///
     /// let board = Board::default();
     ///
@@ -191,7 +191,7 @@ impl Board {
     /// color.
     ///
     /// ```
-    /// use chess::{Board, BitBoard, Rank, get_rank, Color};
+    /// use candidate::{Board, BitBoard, Rank, get_rank, Color};
     ///
     /// let board = Board::default();
     ///
@@ -212,7 +212,7 @@ impl Board {
     /// Give me the `Square` the `color` king is on.
     ///
     /// ```
-    /// use chess::{Board, Square, Color};
+    /// use candidate::{Board, Square, Color};
     ///
     /// let board = Board::default();
     ///
@@ -227,7 +227,7 @@ impl Board {
     /// Grab the "pieces" `BitBoard`.  This is a `BitBoard` with every piece of a particular type.
     ///
     /// ```
-    /// use chess::{Board, BitBoard, Piece, Square};
+    /// use candidate::{Board, BitBoard, Piece, Square};
     ///
     /// // The rooks should be in each corner of the board
     /// let rooks = BitBoard::from_square(Square::A1) |
@@ -247,7 +247,7 @@ impl Board {
     /// Grab the `CastleRights` for a particular side.
     ///
     /// ```
-    /// use chess::{Board, Square, CastleRights, Color, ChessMove};
+    /// use candidate::{Board, Square, CastleRights, Color, ChessMove};
     ///
     /// let move1 = ChessMove::new(Square::A2,
     ///                            Square::A4,
@@ -299,7 +299,7 @@ impl Board {
     /// Remove castle rights for a particular side.
     ///
     /// ```
-    /// use chess::{Board, CastleRights, Color};
+    /// use candidate::{Board, CastleRights, Color};
     ///
     /// let mut board = Board::default();
     /// assert_eq!(board.castle_rights(Color::White), CastleRights::Both);
@@ -322,7 +322,7 @@ impl Board {
     /// Who's turn is it?
     ///
     /// ```
-    /// use chess::{Board, Color};
+    /// use candidate::{Board, Color};
     ///
     /// let mut board = Board::default();
     /// assert_eq!(board.side_to_move(), Color::White);
@@ -335,7 +335,7 @@ impl Board {
     /// Grab my `CastleRights`.
     ///
     /// ```
-    /// use chess::{Board, Color, CastleRights};
+    /// use candidate::{Board, Color, CastleRights};
     ///
     /// let mut board = Board::default();
     /// board.remove_castle_rights(Color::White, CastleRights::KingSide);
@@ -363,7 +363,7 @@ impl Board {
     /// Remove some of my `CastleRights`.
     ///
     /// ```
-    /// use chess::{Board, CastleRights};
+    /// use candidate::{Board, CastleRights};
     ///
     /// let mut board = Board::default();
     /// assert_eq!(board.my_castle_rights(), CastleRights::Both);
@@ -385,7 +385,7 @@ impl Board {
     /// My opponents `CastleRights`.
     ///
     /// ```
-    /// use chess::{Board, Color, CastleRights};
+    /// use candidate::{Board, Color, CastleRights};
     ///
     /// let mut board = Board::default();
     /// board.remove_castle_rights(Color::White, CastleRights::KingSide);
@@ -413,7 +413,7 @@ impl Board {
     /// Remove some of my opponents `CastleRights`.
     ///
     /// ```
-    /// use chess::{Board, CastleRights};
+    /// use candidate::{Board, CastleRights};
     ///
     /// let mut board = Board::default();
     /// assert_eq!(board.their_castle_rights(), CastleRights::Both);
@@ -445,7 +445,7 @@ impl Board {
     /// For a chess UI: set a piece on a particular square.
     ///
     /// ```
-    /// use chess::{Board, Piece, Color, Square};
+    /// use candidate::{Board, Piece, Color, Square};
     ///
     /// let board = Board::default();
     ///
@@ -496,7 +496,7 @@ impl Board {
     /// For a chess UI: clear a particular square.
     ///
     /// ```
-    /// use chess::{Board, Square, Piece};
+    /// use candidate::{Board, Square, Piece};
     ///
     /// let board = Board::default();
     ///
@@ -547,7 +547,7 @@ impl Board {
     /// always give the same result back.
     ///
     /// ```
-    /// use chess::{Board, Color};
+    /// use candidate::{Board, Color};
     ///
     /// let board = Board::default();
     ///
@@ -575,7 +575,7 @@ impl Board {
     /// This is for sanity checking.
     ///
     /// ```
-    /// use chess::{Board, Color, Piece, Square};
+    /// use candidate::{Board, Color, Piece, Square};
     ///
     /// let board = Board::default();
     ///
@@ -714,7 +714,7 @@ impl Board {
     /// What piece is on a particular `Square`?  Is there even one?
     ///
     /// ```
-    /// use chess::{Board, Piece, Square};
+    /// use candidate::{Board, Piece, Square};
     ///
     /// let board = Board::default();
     ///
@@ -777,7 +777,7 @@ impl Board {
     /// Give me the en_passant square, if it exists.
     ///
     /// ```
-    /// use chess::{Board, ChessMove, Square};
+    /// use candidate::{Board, ChessMove, Square};
     ///
     /// let move1 = ChessMove::new(Square::D2,
     ///                            Square::D4,
@@ -825,7 +825,7 @@ impl Board {
     /// input.
     ///
     /// ```
-    /// use chess::{Board, ChessMove, Square, MoveGen};
+    /// use candidate::{Board, ChessMove, Square, MoveGen};
     ///
     /// let move1 = ChessMove::new(Square::E2,
     ///                            Square::E4,
@@ -850,7 +850,7 @@ impl Board {
     /// panic!() if king is captured.
     ///
     /// ```
-    /// use chess::{Board, ChessMove, Square, Color};
+    /// use candidate::{Board, ChessMove, Square, Color};
     ///
     /// let m = ChessMove::new(Square::D2,
     ///                        Square::D4,
@@ -873,7 +873,7 @@ impl Board {
     /// panic!() if king is captured.
     ///
     /// ```
-    /// use chess::{Board, ChessMove, Square, Color};
+    /// use candidate::{Board, ChessMove, Square, Color};
     ///
     /// let m = ChessMove::new(Square::D2,
     ///                        Square::D4,
