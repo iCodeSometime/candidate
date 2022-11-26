@@ -47,6 +47,8 @@ impl Piece {
     /// assert_eq!(Piece::King.to_string(Color::White), "K");
     /// assert_eq!(Piece::Knight.to_string(Color::Black), "n");
     /// ```
+    ///
+    // TODO: refactor - why is white uppercase and black lowercase??
     #[inline]
     pub fn to_string(&self, color: Color) -> String {
         let piece = format!("{}", self);

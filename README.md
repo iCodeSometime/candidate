@@ -172,10 +172,13 @@ More coming soon
 This project was forked from https://github.com/jordanbray/chess, as of `91fe8e2`.
 Several unmerged PRs have been added into this version - the author on these commits has been set to reflect the actual author.
 Maintaining backwards compatibility with the `chess` crate is a non-goal. Expect breaking changes until 1.0.
+Check CHANGELOG.md for details - all breaking changes should be marked as *BREAKING*
 
 Some of the improvements made since the fork:
  - Build times are _drastically_ improved. rust-analyzer actually works now (thanks KarelPeeters)
  - Checking the `status` of the `Board` is 2-3x faster for a fully populated board (thanks AlexanderHarrison)
+ - `Game::make_move` now returns `Option<String>` with the SAN representation of the move. `Board::make_move` still returns a bool to avoid overhead in the hot path
+ - `Board::en_passant_target` and `Board::has_checkers` added as convenience methods. `Board::en_passant` is slightly faster than `Board::en_passant_target` for now.
  - Performance benchmarks added
 
 ## Is it any good?
