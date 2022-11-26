@@ -305,16 +305,78 @@ impl Game {
     ///
     /// game.make_move(movegen.next().expect("At least one legal move"));
     /// ```
-    pub fn make_move(&mut self, chess_move: ChessMove) -> bool {
+    pub fn make_move(&mut self, chess_move: ChessMove) -> Option<String> {
         if self.result().is_some() {
-            return false;
+            return None;
         }
-        if self.current_position().legal(chess_move) {
-            self.moves.push(Action::MakeMove(chess_move));
-            true
-        } else {
-            false
+
+        let initial_position = self.current_position();
+        if !initial_position.legal(chess_move) {
+            return None;
         }
+
+        self.moves.push(Action::MakeMove(chess_move));
+        Some(Self::generate_san(
+            &initial_position,
+            &self.current_position(),
+            chess_move,
+        ))
+    }
+
+    // Generate SAN for a given board and move.
+    // Move must be legal.
+    fn generate_san(initial_board: &Board, final_board: &Board, chess_move: ChessMove) -> String {
+        let mut san = String::new();
+
+        // Add piece type if not pawn
+        let piece = initial_board
+            .piece_on(chess_move.get_source())
+            .expect("the move is valid");
+        if piece != Piece::Pawn {
+            san.push(
+                // white is uppercase??
+                piece
+                    .to_string(Color::White)
+                    .to_uppercase()
+                    .chars()
+                    .next()
+                    .expect("a piece has a valid string notation"),
+            );
+        }
+        let is_capture = initial_board.piece_on(chess_move.get_dest()).is_some()
+            || initial_board.en_passant_target() == Some(chess_move.get_dest());
+
+        if is_capture {
+            if piece == Piece::Pawn {
+                san.push(
+                    chess_move
+                        .get_source()
+                        .to_string()
+                        .chars()
+                        .next()
+                        .expect("a square has a valid string notation"),
+                );
+            }
+
+            san.push('x');
+        }
+
+        san.push_str(&chess_move.get_dest().to_string());
+
+        let promotion = chess_move.get_promotion();
+        if let Some(promotion) = promotion {
+            san.push_str(&format!("={promotion}").to_uppercase());
+        }
+
+        if final_board.has_checkers() {
+            if MoveGen::has_legal_moves(final_board) {
+                san.push('+');
+            } else {
+                san.push('#');
+            }
+        }
+
+        san
     }
 
     /// Who's turn is it to move?
@@ -474,4 +536,44 @@ pub fn test_can_declare_draw() {
 
     let game = fake_pgn_parser("1. d4 Nf6 2. c4 g6 3. Nc3 Bg7 4. e4 d6 5. Nf3 O-O 6. Be2 e5 7. O-O Nc6 8. d5 Ne7 9. Nd2 a5 10. Rb1 Nd7 11. a3 f5 12. b4 Kh8 13. f3 Ng8 14. Qc2 Ngf6 15. Nb5 axb4 16. axb4 Nh5 17. g3 Ndf6 18. c5 Bd7 19. Rb3 Nxg3 20. hxg3 Nh5 21. f4 exf4 22. c6 bxc6 23. dxc6 Nxg3 24. Rxg3 fxg3 25. cxd7 g2 26. Rf3 Qxd7 27. Bb2 fxe4 28. Rxf8+ Rxf8 29. Bxg7+ Qxg7 30. Qxe4 Qf6 31. Nf3 Qf4 32. Qe7 Rf7 33. Qe6 Rf6 34. Qe8+ Rf8 35. Qe7 Rf7 36. Qe6 Rf6 37. Qb3 g5 38. Nxc7 g4 39. Nd5 Qc1+ 40. Qd1 Qxd1+ 41. Bxd1 Rf5 42. Ne3 Rf4 43. Ne1 Rxb4 44. Bxg4 h5 45. Bf3 d5 46. N3xg2 h4 47. Nd3 Ra4 48. Ngf4 Kg7 49. Kg2 Kf6 50. Bxd5 Ra5 51. Bc6 Ra6 52. Bb7 Ra3 53. Be4 Ra4 54. Bd5 Ra5 55. Bc6 Ra6 56. Bf3 Kg5 57. Bb7 Ra1 58. Bc8 Ra4 59. Kf3 Rc4 60. Bd7 Kf6 61. Kg4 Rd4 62. Bc6 Rd8 63. Kxh4 Rg8 64. Be4 Rg1 65. Nh5+ Ke6 66. Ng3 Kf6 67. Kg4 Ra1 68. Bd5 Ra5 69. Bf3 Ra1 70. Kf4 Ke6 71. Nc5+ Kd6 72. Nge4+ Ke7 73. Ke5 Rf1 74. Bg4 Rg1 75. Be6 Re1 76. Bc8 Rc1 77. Kd4 Rd1+ 78. Nd3 Kf7 79. Ke3 Ra1 80. Kf4 Ke7 81. Nb4 Rc1 82. Nd5+ Kf7 83. Bd7 Rf1+ 84. Ke5 Ra1 85. Ng5+ Kg6 86. Nf3 Kg7 87. Bg4 Kg6 88. Nf4+ Kg7 89. Nd4 Re1+ 90. Kf5 Rc1 91. Be2 Re1 92. Bh5 Ra1 93. Nfe6+ Kh6 94. Be8 Ra8 95. Bc6 Ra1 96. Kf6 Kh7 97. Ng5+ Kh8 98. Nde6 Ra6 99. Be8 Ra8 100. Bh5 Ra1 101. Bg6 Rf1+ 102. Ke7 Ra1 103. Nf7+ Kg8 104. Nh6+ Kh8 105. Nf5 Ra7+ 106. Kf6 Ra1 107. Ne3 Re1 108. Nd5 Rg1 109. Bf5 Rf1 110. Ndf4 Ra1 111. Ng6+ Kg8 112. Ne7+ Kh8");
     assert!(!game.can_declare_draw());
+}
+
+#[test]
+pub fn test_make_move() {
+    use crate::square::Square;
+
+    let mut game = Game::new();
+
+    #[rustfmt::skip]
+    let move_list = [
+        (ChessMove::new(Square::D2, Square::D4, None), "d4"),
+        (ChessMove::new(Square::D2, Square::D4, None), ""),
+        (ChessMove::new(Square::D7, Square::D5, None), "d5"),
+        (ChessMove::new(Square::C2, Square::C4, None), "c4"),
+        (ChessMove::new(Square::D5, Square::C4, None), "dxc4"),
+        (ChessMove::new(Square::D1, Square::A4, None), "Qa4+"),
+        (ChessMove::new(Square::C8, Square::D7, None), "Bd7"),
+        (ChessMove::new(Square::A4, Square::C4, None), "Qxc4"),
+        (ChessMove::new(Square::G8, Square::F6, None), "Nf6"),
+        (ChessMove::new(Square::E2, Square::E4, None), "e4"),
+        (ChessMove::new(Square::F6, Square::D5, None), "Nd5"),
+        (ChessMove::new(Square::E4, Square::D5, None), "exd5"),
+        (ChessMove::new(Square::E7, Square::E5, None), "e5"),
+        (ChessMove::new(Square::D5, Square::E6, None), "dxe6"), // en passant
+        (ChessMove::new(Square::D8, Square::H4, None), "Qh4"),
+        (ChessMove::new(Square::C4, Square::D5, None), "Qd5"),
+        (ChessMove::new(Square::H4, Square::D4, None), "Qxd4"),
+        (ChessMove::new(Square::E6, Square::D7, None), "exd7+"),
+        (ChessMove::new(Square::E8, Square::E7, None), "Ke7"),
+        (ChessMove::new(Square::D7, Square::D8, Some(Piece::Queen)), "d8=Q#"),
+    ];
+
+    for (mv, expected_san) in move_list.iter() {
+        let san = game.make_move(*mv);
+        if (*expected_san).len() == 0 {
+            assert_eq!(san, None);
+        } else {
+            assert_eq!(san.unwrap(), *expected_san);
+        }
+    }
 }

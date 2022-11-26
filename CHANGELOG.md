@@ -1,7 +1,8 @@
 v0.0.2
  - Added `Board::en_passant_target` to match standard meaning - for now, `Board::en_passant` should still be preferred in the hot path.
  - Added `Board::has_checkers` as convenience function.
- 
+ - *BREAKING* - `Game::make_move` now returns the SAN notation for the move made. `Board::make_move` (hot path) is unchanged.
+
 ---
 
 v0.0.1
