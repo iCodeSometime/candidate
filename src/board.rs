@@ -804,6 +804,17 @@ impl Board {
     pub fn en_passant(self) -> Option<Square> {
         self.en_passant
     }
+    #[inline]
+    pub fn en_passant_target(self) -> Option<Square> {
+        let last_moved = match self.side_to_move() {
+            Color::White => Color::Black,
+            Color::Black => Color::White,
+        };
+        match self.en_passant {
+            Some(sq) => Some(sq.ubackward(last_moved)),
+            None => None,
+        }
+    }
 
     /// Set the en_passant square.  Note: This must only be called when self.en_passant is already
     /// None.
@@ -1038,6 +1049,11 @@ impl Board {
     #[inline]
     pub fn checkers(&self) -> &BitBoard {
         &self.checkers
+    }
+
+    #[inline]
+    pub fn has_checkers(&self) -> bool {
+        self.checkers != EMPTY
     }
 }
 

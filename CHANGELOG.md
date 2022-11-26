@@ -1,6 +1,7 @@
 v0.0.2
-
-
+ - Added `Board::en_passant_target` to match standard meaning - for now, `Board::en_passant` should still be preferred in the hot path.
+ - Added `Board::has_checkers` as convenience function.
+ 
 ---
 
 v0.0.1
