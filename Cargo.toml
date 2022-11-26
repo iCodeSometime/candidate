@@ -47,3 +47,6 @@ criterion = "0.3"
 [[bench]]
 name = "standard"
 harness = false
+
+[lib]
+bench = false
