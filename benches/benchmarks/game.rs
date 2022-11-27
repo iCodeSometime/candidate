@@ -34,7 +34,7 @@ fn legality_benchmarks(c: &mut Criterion) {
         b.iter(|| {
             for (index, m) in moves.iter().enumerate() {
                 let board = game.get_boards()[index];
-                assert_eq!(board.legal(*m), true);
+                assert!(board.legal(*m));
             }
         })
     });
@@ -42,7 +42,7 @@ fn legality_benchmarks(c: &mut Criterion) {
         b.iter(|| {
             for (index, m) in moves.iter().enumerate() {
                 let board = game.get_boards()[index];
-                assert_eq!(MoveGen::new_legal(&board).any(|mv| mv == *m), true);
+                assert!(MoveGen::new_legal(&board).any(|mv| mv == *m));
             }
         })
     });

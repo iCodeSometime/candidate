@@ -248,7 +248,7 @@ impl MoveGen {
                 Piece::King => KingType::legals::<InCheckType>(&mut movelist, &board, mask),
             }
         } else {
-            if let Piece::King = piece {
+            if matches!(piece, Piece::King) {
                 KingType::legals::<InCheckType>(&mut movelist, &board, mask);
             }
         };
