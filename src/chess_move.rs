@@ -24,9 +24,9 @@ impl ChessMove {
     #[inline]
     pub fn new(source: Square, dest: Square, promotion: Option<Piece>) -> ChessMove {
         ChessMove {
-            source: source,
-            dest: dest,
-            promotion: promotion,
+            source,
+            dest,
+            promotion,
         }
     }
 

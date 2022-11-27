@@ -113,9 +113,9 @@ impl BoardBuilder {
     ) -> BoardBuilder {
         let mut result = BoardBuilder {
             pieces: [None; 64],
-            side_to_move: side_to_move,
+            side_to_move,
             castle_rights: [white_castle_rights, black_castle_rights],
-            en_passant: en_passant,
+            en_passant,
         };
 
         for piece in pieces.into_iter() {

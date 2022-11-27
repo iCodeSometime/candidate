@@ -75,7 +75,7 @@ fn generate_magic(sq: Square, piece: Piece, cur_offset: usize) -> usize {
 
     let mut new_magic = Magic {
         magic_number: EMPTY,
-        mask: mask,
+        mask,
         offset: new_offset as u32,
         rightshift: ((questions.len() as u64).leading_zeros() + 1) as u8,
     };
