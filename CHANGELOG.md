@@ -1,3 +1,6 @@
+v0.0.3
+ - Added optional `tracing` instrumentation to Game - use the `instrument_game` feature to enable.
+
 v0.0.2
  - Added `Board::en_passant_target` to match standard meaning - for now, `Board::en_passant` should still be preferred in the hot path.
  - Added `Board::has_checkers` as convenience function.

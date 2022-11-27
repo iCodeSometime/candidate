@@ -5,6 +5,8 @@ use crate::error::Error;
 use crate::movegen::MoveGen;
 use crate::piece::Piece;
 use std::str::FromStr;
+#[cfg(any(feature = "instrument_game", feature = "instrument_all"))]
+use tracing::instrument;
 
 /// Contains all actions supported within the game
 #[derive(Copy, Clone, PartialEq, PartialOrd, Debug, Eq)]
@@ -48,6 +50,10 @@ impl Game {
     /// let game = Game::new();
     /// assert_eq!(game.current_position(), Board::default());
     /// ```
+    #[cfg_attr(
+        any(feature = "instrument_game", feature = "instrument_all"),
+        instrument
+    )]
     pub fn new() -> Game {
         Game {
             start_pos: Board::default(),
@@ -63,6 +69,10 @@ impl Game {
     /// let game = Game::new_with_board(Board::default());
     /// assert_eq!(game.current_position(), Board::default());
     /// ```
+    #[cfg_attr(
+        any(feature = "instrument_game", feature = "instrument_all"),
+        instrument
+    )]
     pub fn new_with_board(board: Board) -> Game {
         Game {
             start_pos: board,
@@ -82,6 +92,10 @@ impl Game {
     /// game.resign(Color::Black);
     /// assert_eq!(game.actions().len(), 2);
     /// ```
+    #[cfg_attr(
+        any(feature = "instrument_game", feature = "instrument_all"),
+        instrument
+    )]
     pub fn actions(&self) -> &Vec<Action> {
         &self.moves
     }
@@ -94,6 +108,10 @@ impl Game {
     /// let game = Game::new();
     /// assert!(game.result().is_none());
     /// ```
+    #[cfg_attr(
+        any(feature = "instrument_game", feature = "instrument_all"),
+        instrument
+    )]
     pub fn result(&self) -> Option<GameResult> {
         match self.current_position().status() {
             BoardStatus::Checkmate => {
@@ -142,6 +160,10 @@ impl Game {
     /// assert!(game2.is_none());
     /// # }
     /// ```
+    #[cfg_attr(
+        any(feature = "instrument_game", feature = "instrument_all"),
+        instrument
+    )]
     #[deprecated(since = "3.1.0", note = "Please use Game::from_str(fen)? instead.")]
     pub fn new_from_fen(fen: &str) -> Option<Game> {
         Game::from_str(fen).ok()
@@ -155,6 +177,10 @@ impl Game {
     /// let game = Game::new();
     /// assert_eq!(game.current_position(), Board::default());
     /// ```
+    #[cfg_attr(
+        any(feature = "instrument_game", feature = "instrument_all"),
+        instrument
+    )]
     pub fn current_position(&self) -> Board {
         let mut copy = self.start_pos;
 
@@ -194,6 +220,10 @@ impl Game {
     /// game.make_move(c6b8);
     /// assert_eq!(game.can_declare_draw(), true); // position has shown up three times
     /// ```
+    #[cfg_attr(
+        any(feature = "instrument_game", feature = "instrument_all"),
+        instrument
+    )]
     pub fn can_declare_draw(&self) -> bool {
         if self.result().is_some() {
             return false;
@@ -278,6 +308,10 @@ impl Game {
     /// assert_eq!(game.can_declare_draw(), true); // position has shown up three times
     /// game.declare_draw();
     /// ```
+    #[cfg_attr(
+        any(feature = "instrument_game", feature = "instrument_all"),
+        instrument
+    )]
     pub fn declare_draw(&mut self) -> bool {
         if self.can_declare_draw() {
             self.moves.push(Action::DeclareDraw);
@@ -298,6 +332,10 @@ impl Game {
     ///
     /// game.make_move(movegen.next().expect("At least one legal move"));
     /// ```
+    #[cfg_attr(
+        any(feature = "instrument_game", feature = "instrument_all"),
+        instrument
+    )]
     pub fn make_move(&mut self, chess_move: ChessMove) -> Option<String> {
         if self.result().is_some() {
             return None;
@@ -318,6 +356,10 @@ impl Game {
 
     // Generate SAN for a given board and move.
     // Move must be legal.
+    #[cfg_attr(
+        any(feature = "instrument_game", feature = "instrument_all"),
+        instrument
+    )]
     fn generate_san(initial_board: &Board, final_board: &Board, chess_move: ChessMove) -> String {
         let mut san = String::new();
 
@@ -380,6 +422,10 @@ impl Game {
     /// let game = Game::new();
     /// assert_eq!(game.side_to_move(), Color::White);
     /// ```
+    #[cfg_attr(
+        any(feature = "instrument_game", feature = "instrument_all"),
+        instrument
+    )]
     pub fn side_to_move(&self) -> Color {
         let move_count = self
             .moves
@@ -411,6 +457,10 @@ impl Game {
     /// let mut game = Game::new();
     /// game.offer_draw(Color::White);
     /// ```
+    #[cfg_attr(
+        any(feature = "instrument_game", feature = "instrument_all"),
+        instrument
+    )]
     pub fn offer_draw(&mut self, color: Color) -> bool {
         if self.result().is_some() {
             return false;
@@ -434,6 +484,10 @@ impl Game {
     /// game2.make_move(movegen.next().expect("At least one legal move"));
     /// assert_eq!(game2.accept_draw(), false);
     /// ```
+    #[cfg_attr(
+        any(feature = "instrument_game", feature = "instrument_all"),
+        instrument
+    )]
     pub fn accept_draw(&mut self) -> bool {
         if self.result().is_some() {
             return false;
@@ -465,6 +519,10 @@ impl Game {
     /// let mut game = Game::new();
     /// game.resign(Color::White);
     /// ```
+    #[cfg_attr(
+        any(feature = "instrument_game", feature = "instrument_all"),
+        instrument
+    )]
     pub fn resign(&mut self, color: Color) -> bool {
         if self.result().is_some() {
             return false;
@@ -476,7 +534,10 @@ impl Game {
 
 impl FromStr for Game {
     type Err = Error;
-
+    #[cfg_attr(
+        any(feature = "instrument_game", feature = "instrument_all"),
+        instrument
+    )]
     fn from_str(fen: &str) -> Result<Self, Self::Err> {
         Ok(Game::new_with_board(Board::from_str(fen)?))
     }

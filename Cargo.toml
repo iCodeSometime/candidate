@@ -17,6 +17,11 @@ documentation = "https://jordanbray.github.io/chess/chess/index.html"
 arrayvec = "0.5.1"
 nodrop = "0.1.14"
 failure = "0.1.6"
+tracing = { version = "0.1.37", optional = true }
+
+[features]
+default = []
+instrument_game = ["dep:tracing"]
 
 [profile.release]
 opt-level = 3
