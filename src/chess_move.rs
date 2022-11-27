@@ -129,10 +129,7 @@ impl ChessMove {
 
         let error = Error::InvalidSanMove;
         let mut cur_index: usize = 0;
-        let moving_piece = match move_text
-            .get(cur_index..(cur_index + 1))
-            .ok_or(error.clone())?
-        {
+        let moving_piece = match move_text.get(cur_index..=cur_index).ok_or(error.clone())? {
             "N" => {
                 cur_index += 1;
                 Piece::Knight
@@ -156,10 +153,7 @@ impl ChessMove {
             _ => Piece::Pawn,
         };
 
-        let mut source_file = match move_text
-            .get(cur_index..(cur_index + 1))
-            .ok_or(error.clone())?
-        {
+        let mut source_file = match move_text.get(cur_index..=cur_index).ok_or(error.clone())? {
             "a" => {
                 cur_index += 1;
                 Some(File::A)
@@ -195,10 +189,7 @@ impl ChessMove {
             _ => None,
         };
 
-        let mut source_rank = match move_text
-            .get(cur_index..(cur_index + 1))
-            .ok_or(error.clone())?
-        {
+        let mut source_rank = match move_text.get(cur_index..=cur_index).ok_or(error.clone())? {
             "1" => {
                 cur_index += 1;
                 Some(Rank::First)
@@ -234,7 +225,7 @@ impl ChessMove {
             _ => None,
         };
 
-        let takes = if let Some(s) = move_text.get(cur_index..(cur_index + 1)) {
+        let takes = if let Some(s) = move_text.get(cur_index..=cur_index) {
             match s {
                 "x" => {
                     cur_index += 1;
@@ -269,7 +260,7 @@ impl ChessMove {
             sq
         };
 
-        let promotion = if let Some(s) = move_text.get(cur_index..(cur_index + 1)) {
+        let promotion = if let Some(s) = move_text.get(cur_index..=cur_index) {
             match s {
                 "N" => {
                     cur_index += 1;
@@ -293,7 +284,7 @@ impl ChessMove {
             None
         };
 
-        if let Some(s) = move_text.get(cur_index..(cur_index + 1)) {
+        if let Some(s) = move_text.get(cur_index..=cur_index) {
             let _maybe_check_or_mate = match s {
                 "+" => {
                     cur_index += 1;
