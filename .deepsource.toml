@@ -1,11 +1,16 @@
 version = 1
 
 [[analyzers]]
+name = "test-coverage"
+enabled = true
+
+[[analyzers]]
 name = "rust"
 enabled = true
 
   [analyzers.meta]
   msrv = "stable"
 
-name = "test-coverage"
+[[transformers]]
+name = "rustfmt"
 enabled = true
