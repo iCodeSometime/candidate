@@ -39,6 +39,8 @@ pub enum GameResult {
 pub struct Game {
     start_pos: Board,
     moves: Vec<Action>,
+    #[cfg(feature = "cache_game_state")]
+    boards: Vec<Board>,
 }
 
 impl Game {
@@ -58,6 +60,8 @@ impl Game {
         Game {
             start_pos: Board::default(),
             moves: vec![],
+            #[cfg(feature = "cache_game_state")]
+            boards: vec![Board::default()],
         }
     }
 
@@ -77,6 +81,8 @@ impl Game {
         Game {
             start_pos: board,
             moves: vec![],
+            #[cfg(feature = "cache_game_state")]
+            boards: vec![board],
         }
     }
 
@@ -182,15 +188,22 @@ impl Game {
         instrument
     )]
     pub fn current_position(&self) -> Board {
-        let mut copy = self.start_pos;
-
-        for x in self.moves.iter() {
-            if let Action::MakeMove(m) = *x {
-                copy = copy.make_move_new(m);
-            }
+        #[cfg(feature = "cache_game_state")]
+        {
+            self.boards.last().expect("At least one board").clone()
         }
+        #[cfg(not(feature = "cache_game_state"))]
+        {
+            let mut copy = self.start_pos;
 
-        copy
+            for x in self.moves.iter() {
+                if let Action::MakeMove(m) = *x {
+                    copy = copy.make_move_new(m);
+                }
+            }
+
+            copy
+        }
     }
 
     /// Determine if a player can legally declare a draw by 3-fold repetition or 50-move rule.
@@ -346,6 +359,11 @@ impl Game {
             return None;
         }
 
+        #[cfg(feature = "cache_game_state")]
+        {
+            self.boards.push(initial_position.make_move_new(chess_move));
+        }
+
         self.moves.push(Action::MakeMove(chess_move));
         Some(Self::generate_san(
             &initial_position,
@@ -427,24 +445,31 @@ impl Game {
         instrument
     )]
     pub fn side_to_move(&self) -> Color {
-        let move_count = self
-            .moves
-            .iter()
-            .filter(|m| match *m {
-                Action::MakeMove(_) => true,
-                _ => false,
-            })
-            .count()
-            + if self.start_pos.side_to_move() == Color::White {
-                0
-            } else {
-                1
-            };
+        #[cfg(feature = "cache_game_state")]
+        {
+            self.current_position().side_to_move()
+        }
+        #[cfg(not(feature = "cache_game_state"))]
+        {
+            let move_count = self
+                .moves
+                .iter()
+                .filter(|m| match *m {
+                    Action::MakeMove(_) => true,
+                    _ => false,
+                })
+                .count()
+                + if self.start_pos.side_to_move() == Color::White {
+                    0
+                } else {
+                    1
+                };
 
-        if move_count % 2 == 0 {
-            Color::White
-        } else {
-            Color::Black
+            if move_count % 2 == 0 {
+                Color::White
+            } else {
+                Color::Black
+            }
         }
     }
 

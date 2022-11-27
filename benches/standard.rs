@@ -5,4 +5,5 @@ mod benchmarks;
 criterion_main! {
   benchmarks::perft::perft,
   benchmarks::board::board,
+  benchmarks::game::game,
 }
