@@ -159,11 +159,8 @@ impl Game {
         let mut copy = self.start_pos;
 
         for x in self.moves.iter() {
-            match *x {
-                Action::MakeMove(m) => {
-                    copy = copy.make_move_new(m);
-                }
-                _ => {}
+            if let Action::MakeMove(m) = *x {
+                copy = copy.make_move_new(m);
             }
         }
 
@@ -211,31 +208,28 @@ impl Game {
         // and filling a list of legal_moves_per_turn list for 3-fold repitition
         legal_moves_per_turn.push((board.get_hash(), MoveGen::new_legal(&board).collect()));
         for x in self.moves.iter() {
-            match *x {
-                Action::MakeMove(m) => {
-                    let white_castle_rights = board.castle_rights(Color::White);
-                    let black_castle_rights = board.castle_rights(Color::Black);
-                    if board.piece_on(m.get_source()) == Some(Piece::Pawn) {
-                        reversible_moves = 0;
-                        legal_moves_per_turn.clear();
-                    } else if board.piece_on(m.get_dest()).is_some() {
-                        reversible_moves = 0;
-                        legal_moves_per_turn.clear();
-                    } else {
-                        reversible_moves += 1;
-                    }
-                    board = board.make_move_new(m);
-
-                    if board.castle_rights(Color::White) != white_castle_rights
-                        || board.castle_rights(Color::Black) != black_castle_rights
-                    {
-                        reversible_moves = 0;
-                        legal_moves_per_turn.clear();
-                    }
-                    legal_moves_per_turn
-                        .push((board.get_hash(), MoveGen::new_legal(&board).collect()));
+            if let Action::MakeMove(m) = *x {
+                let white_castle_rights = board.castle_rights(Color::White);
+                let black_castle_rights = board.castle_rights(Color::Black);
+                if board.piece_on(m.get_source()) == Some(Piece::Pawn) {
+                    reversible_moves = 0;
+                    legal_moves_per_turn.clear();
+                } else if board.piece_on(m.get_dest()).is_some() {
+                    reversible_moves = 0;
+                    legal_moves_per_turn.clear();
+                } else {
+                    reversible_moves += 1;
                 }
-                _ => {}
+                board = board.make_move_new(m);
+
+                if board.castle_rights(Color::White) != white_castle_rights
+                    || board.castle_rights(Color::Black) != black_castle_rights
+                {
+                    reversible_moves = 0;
+                    legal_moves_per_turn.clear();
+                }
+                legal_moves_per_turn
+                    .push((board.get_hash(), MoveGen::new_legal(&board).collect()));
             }
         }
 
