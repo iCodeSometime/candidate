@@ -452,21 +452,21 @@ impl FromStr for BoardBuilder {
             }
         }
 
-        if castles.contains("K") && castles.contains("Q") {
+        if castles.contains('K') && castles.contains('Q') {
             fen.castle_rights[Color::White.to_index()] = CastleRights::Both;
-        } else if castles.contains("K") {
+        } else if castles.contains('K') {
             fen.castle_rights[Color::White.to_index()] = CastleRights::KingSide;
-        } else if castles.contains("Q") {
+        } else if castles.contains('Q') {
             fen.castle_rights[Color::White.to_index()] = CastleRights::QueenSide;
         } else {
             fen.castle_rights[Color::White.to_index()] = CastleRights::NoRights;
         }
 
-        if castles.contains("k") && castles.contains("q") {
+        if castles.contains('k') && castles.contains('q') {
             fen.castle_rights[Color::Black.to_index()] = CastleRights::Both;
-        } else if castles.contains("k") {
+        } else if castles.contains('k') {
             fen.castle_rights[Color::Black.to_index()] = CastleRights::KingSide;
-        } else if castles.contains("q") {
+        } else if castles.contains('q') {
             fen.castle_rights[Color::Black.to_index()] = CastleRights::QueenSide;
         } else {
             fen.castle_rights[Color::Black.to_index()] = CastleRights::NoRights;
