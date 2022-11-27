@@ -228,8 +228,7 @@ impl Game {
                     reversible_moves = 0;
                     legal_moves_per_turn.clear();
                 }
-                legal_moves_per_turn
-                    .push((board.get_hash(), MoveGen::new_legal(&board).collect()));
+                legal_moves_per_turn.push((board.get_hash(), MoveGen::new_legal(&board).collect()));
             }
         }
 
