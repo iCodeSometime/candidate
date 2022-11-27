@@ -19,8 +19,11 @@ jobs:
         run: cargo build --verbose
       - name: Run tests
         run: cargo test --verbose
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+      - name: Upload codecov
+        run: |
+          cargo +stable install cargo-llvm-cov
+          cargo llvm-cov --lcov --output-path coverage.info
+          curl https://deepsource.io/cli | sh
+          ./bin/deepsource report --analyzer test-coverage --key rust --value-file ./coverage.info
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}

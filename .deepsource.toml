@@ -6,3 +6,6 @@ enabled = true
 
   [analyzers.meta]
   msrv = "stable"
+
+name = "test-coverage"
+enabled = true
