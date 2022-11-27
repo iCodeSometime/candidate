@@ -955,7 +955,7 @@ impl Board {
         if moved == Piece::Knight {
             result.checkers ^= get_knight_moves(ksq) & dest_bb;
         } else if moved == Piece::Pawn {
-            if let Some(Piece::Knight) = m.get_promotion() {
+            if matches!(m.get_promotion(), Some(Piece::Knight)) {
                 result.xor(Piece::Pawn, dest_bb, self.side_to_move);
                 result.xor(Piece::Knight, dest_bb, self.side_to_move);
                 result.checkers ^= get_knight_moves(ksq) & dest_bb;
