@@ -851,7 +851,7 @@ impl Board {
     /// ```
     #[inline]
     pub fn legal(&self, m: ChessMove) -> bool {
-        MoveGen::new_legal(&self).any(|x| x == m)
+        MoveGen::legal_unsanitized(self, m)
     }
 
     /// Make a chess move onto a new board.

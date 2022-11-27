@@ -182,6 +182,7 @@ Some of the improvements made since the fork:
  - Build times are _drastically_ improved. rust-analyzer actually works now (thanks KarelPeeters)
  - Checking the `status` of the `Board` is 2-3x faster for a fully populated board (thanks AlexanderHarrison)
  - Using `Game` is 10-20x faster for reasonably sized games when using the new `cache_game_state` feature (more for larger games)
+ - Legality checking of unsanitized moves is 4-5x faster
  - `Game::make_move` now returns `Option<String>` with the SAN representation of the move. `Board::make_move` still returns a bool to avoid overhead in the hot path
  - Optional instrumentation added to `Game`, using [tracing](https://github.com/tokio-rs/tracing) - just use the `instrument_game` feature.
  - `Board::en_passant_target` and `Board::has_checkers` added as convenience methods. `Board::en_passant` is slightly faster than `Board::en_passant_target` for now.

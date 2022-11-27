@@ -65,6 +65,10 @@ impl Game {
         }
     }
 
+    pub fn get_boards(&self) -> &Vec<Board> {
+        &self.boards
+    }
+
     /// Create a new `Game` with a specific starting position.
     ///
     /// ```
