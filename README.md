@@ -1,11 +1,11 @@
 # A Fast Chess Library In Rust
 
-<div style="display: flex; justify-content: space-evenly">
+<div align="center">
 
 [![Build Status](https://github.com/icodesometime/candidate/actions/workflows/test.yml/badge.svg)](https://github.com/iCodeSometime/candidate/actions/workflows/test.yml)
-[![crates.io](https://img.shields.io/crates/v/candidate.svg)](https://crates.io/crates/candidate)
-[![DeepSource](https://deepsource.io/gh/iCodeSometime/candidate.svg/?label=resolved+issues&show_trend=true&token=jnTOWlnEoudfrav1yqDcRAT7)](https://deepsource.io/gh/iCodeSometime/candidate/?ref=repository-badge)
 [![docs.rs](https://docs.rs/candidate/badge.svg)](https://docs.rs/candidate/)
+[![DeepSource](https://deepsource.io/gh/iCodeSometime/candidate.svg/?label=resolved+issues&show_trend=true&token=jnTOWlnEoudfrav1yqDcRAT7)](https://deepsource.io/gh/iCodeSometime/candidate/?ref=repository-badge)
+[![crates.io](https://img.shields.io/crates/v/candidate.svg)](https://crates.io/crates/candidate)
 
 </div>
 
