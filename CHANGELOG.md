@@ -1,5 +1,6 @@
 v0.0.3
  - Added optional `tracing` instrumentation to Game - use the `instrument_game` feature to enable.
+ - Additional 3x increase in build speed, by only rebuilding magic bitboards when necessary.
 
 v0.0.2
  - Added `Board::en_passant_target` to match standard meaning - for now, `Board::en_passant` should still be preferred in the hot path.
