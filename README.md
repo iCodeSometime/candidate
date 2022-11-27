@@ -1,9 +1,8 @@
 # A Fast Chess Library In Rust
-<!--
-[![Build Status](https://travis-ci.org/jordanbray/chess.svg?branch=master)](https://travis-ci.org/jordanbray/chess)
-[![crates.io](https://img.shields.io/crates/v/chess.svg)](https://crates.io/crates/chess)
-[![docs.rs](https://docs.rs/chess/badge.svg)](https://jordanbray.github.io/chess/chess/)
--->
+[![Build Status](https://github.com/icodesometime/candidate/actions/workflows/test.yml/badge.svg)
+[![crates.io](https://img.shields.io/crates/v/candidate.svg)](https://crates.io/crates/candidate)
+[![DeepSource](https://deepsource.io/gh/iCodeSometime/candidate.svg/?label=resolved+issues&show_trend=true&token=jnTOWlnEoudfrav1yqDcRAT7)](https://deepsource.io/gh/iCodeSometime/candidate/?ref=repository-badge)
+[![docs.rs](https://docs.rs/candidate/badge.svg)](https://docs.rs/candidate/)
 
 This library handles the process of move generation within a chess engine or chess UI.
 
