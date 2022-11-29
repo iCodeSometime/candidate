@@ -1,3 +1,6 @@
+v0.0.4
+ - Added `Board::legal_destinations_from` to get the bitboard representing all legal destinations from a given square.
+
 v0.0.3
  - Added optional `tracing` instrumentation to Game - use the `instrument_game` feature if you're collecting telemetry.
  - Additional 3x increase in build speed, by only rebuilding magic bitboards when necessary.
