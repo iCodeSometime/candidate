@@ -1,5 +1,5 @@
 v0.0.3
- - Added optional `tracing` instrumentation to Game - use the `instrument_game` feature to enable.
+ - Added optional `tracing` instrumentation to Game - use the `instrument_game` feature if you're collecting telemetry.
  - Additional 3x increase in build speed, by only rebuilding magic bitboards when necessary.
  - Added `cache_game_state` default feature to improve performance when using `Game` by 10-20x for reasonably sized games (more for larger games).
  - Legality checking for unsanitized inputs is 4-5x faster.
