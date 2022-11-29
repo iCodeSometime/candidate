@@ -98,21 +98,21 @@ impl MoveGen {
         let mut movelist = NoDrop::new(ArrayVec::<[SquareAndBitBoard; 18]>::new());
 
         if checkers == EMPTY {
-            PawnType::legals::<NotInCheckType>(&mut movelist, &board, mask);
-            KnightType::legals::<NotInCheckType>(&mut movelist, &board, mask);
-            BishopType::legals::<NotInCheckType>(&mut movelist, &board, mask);
-            RookType::legals::<NotInCheckType>(&mut movelist, &board, mask);
-            QueenType::legals::<NotInCheckType>(&mut movelist, &board, mask);
-            KingType::legals::<NotInCheckType>(&mut movelist, &board, mask);
+            PawnType::legals::<NotInCheckType>(&mut movelist, &board, mask, None);
+            KnightType::legals::<NotInCheckType>(&mut movelist, &board, mask, None);
+            BishopType::legals::<NotInCheckType>(&mut movelist, &board, mask, None);
+            RookType::legals::<NotInCheckType>(&mut movelist, &board, mask, None);
+            QueenType::legals::<NotInCheckType>(&mut movelist, &board, mask, None);
+            KingType::legals::<NotInCheckType>(&mut movelist, &board, mask, None);
         } else if checkers.popcnt() == 1 {
-            PawnType::legals::<InCheckType>(&mut movelist, &board, mask);
-            KnightType::legals::<InCheckType>(&mut movelist, &board, mask);
-            BishopType::legals::<InCheckType>(&mut movelist, &board, mask);
-            RookType::legals::<InCheckType>(&mut movelist, &board, mask);
-            QueenType::legals::<InCheckType>(&mut movelist, &board, mask);
-            KingType::legals::<InCheckType>(&mut movelist, &board, mask);
+            PawnType::legals::<InCheckType>(&mut movelist, &board, mask, None);
+            KnightType::legals::<InCheckType>(&mut movelist, &board, mask, None);
+            BishopType::legals::<InCheckType>(&mut movelist, &board, mask, None);
+            RookType::legals::<InCheckType>(&mut movelist, &board, mask, None);
+            QueenType::legals::<InCheckType>(&mut movelist, &board, mask, None);
+            KingType::legals::<InCheckType>(&mut movelist, &board, mask, None);
         } else {
-            KingType::legals::<InCheckType>(&mut movelist, &board, mask);
+            KingType::legals::<InCheckType>(&mut movelist, &board, mask, None);
         }
 
         movelist
@@ -144,12 +144,12 @@ impl MoveGen {
                 KingType::legals::<InCheckType>,
             ]
         } else {
-            KingType::legals::<InCheckType>(&mut movelist, &board, mask);
+            KingType::legals::<InCheckType>(&mut movelist, &board, mask, None);
             return movelist.len() != 0;
         };
 
         for f in legal_fns {
-            f(&mut movelist, &board, mask);
+            f(&mut movelist, &board, mask, None);
             if movelist.len() != 0 {
                 return true;
             }
@@ -218,6 +218,66 @@ impl MoveGen {
         }
     }
 
+    pub fn legal_destinations_from(board: &Board, square: Square) -> BitBoard {
+        let piece = board.piece_on(square);
+        if piece.is_none() {
+            return EMPTY;
+        }
+
+        let piece = piece.unwrap();
+        let checkers = *board.checkers();
+        let mask = !board.color_combined(board.side_to_move());
+        let mut movelist = NoDrop::new(ArrayVec::<[SquareAndBitBoard; 18]>::new());
+
+        if checkers == EMPTY {
+            match piece {
+                Piece::Pawn => {
+                    PawnType::legals::<NotInCheckType>(&mut movelist, &board, mask, Some(square))
+                }
+                Piece::Knight => {
+                    KnightType::legals::<NotInCheckType>(&mut movelist, &board, mask, Some(square))
+                }
+                Piece::Bishop => {
+                    BishopType::legals::<NotInCheckType>(&mut movelist, &board, mask, Some(square))
+                }
+                Piece::Rook => {
+                    RookType::legals::<NotInCheckType>(&mut movelist, &board, mask, Some(square))
+                }
+                Piece::Queen => {
+                    QueenType::legals::<NotInCheckType>(&mut movelist, &board, mask, Some(square))
+                }
+                Piece::King => {
+                    KingType::legals::<NotInCheckType>(&mut movelist, &board, mask, Some(square))
+                }
+            }
+        } else if checkers.popcnt() == 1 {
+            match piece {
+                Piece::Pawn => {
+                    PawnType::legals::<InCheckType>(&mut movelist, &board, mask, Some(square))
+                }
+                Piece::Knight => {
+                    KnightType::legals::<InCheckType>(&mut movelist, &board, mask, Some(square))
+                }
+                Piece::Bishop => {
+                    BishopType::legals::<InCheckType>(&mut movelist, &board, mask, Some(square))
+                }
+                Piece::Rook => {
+                    RookType::legals::<InCheckType>(&mut movelist, &board, mask, Some(square))
+                }
+                Piece::Queen => {
+                    QueenType::legals::<InCheckType>(&mut movelist, &board, mask, Some(square))
+                }
+                Piece::King => {
+                    KingType::legals::<InCheckType>(&mut movelist, &board, mask, Some(square))
+                }
+            }
+        } else {
+            KingType::legals::<InCheckType>(&mut movelist, &board, mask, Some(square));
+        }
+
+        movelist.iter().fold(EMPTY, |acc, x| acc | x.bitboard)
+    }
+
     pub fn legal_unsanitized(board: &Board, chess_move: ChessMove) -> bool {
         let piece = board.piece_on(chess_move.get_source());
         if piece.is_none() {
@@ -231,25 +291,85 @@ impl MoveGen {
 
         if checkers == EMPTY {
             match piece {
-                Piece::Pawn => PawnType::legals::<NotInCheckType>(&mut movelist, &board, mask),
-                Piece::Knight => KnightType::legals::<NotInCheckType>(&mut movelist, &board, mask),
-                Piece::Bishop => BishopType::legals::<NotInCheckType>(&mut movelist, &board, mask),
-                Piece::Rook => RookType::legals::<NotInCheckType>(&mut movelist, &board, mask),
-                Piece::Queen => QueenType::legals::<NotInCheckType>(&mut movelist, &board, mask),
-                Piece::King => KingType::legals::<NotInCheckType>(&mut movelist, &board, mask),
+                Piece::Pawn => PawnType::legals::<NotInCheckType>(
+                    &mut movelist,
+                    &board,
+                    mask,
+                    Some(chess_move.get_source()),
+                ),
+                Piece::Knight => KnightType::legals::<NotInCheckType>(
+                    &mut movelist,
+                    &board,
+                    mask,
+                    Some(chess_move.get_source()),
+                ),
+                Piece::Bishop => BishopType::legals::<NotInCheckType>(
+                    &mut movelist,
+                    &board,
+                    mask,
+                    Some(chess_move.get_source()),
+                ),
+                Piece::Rook => RookType::legals::<NotInCheckType>(
+                    &mut movelist,
+                    &board,
+                    mask,
+                    Some(chess_move.get_source()),
+                ),
+                Piece::Queen => QueenType::legals::<NotInCheckType>(
+                    &mut movelist,
+                    &board,
+                    mask,
+                    Some(chess_move.get_source()),
+                ),
+                Piece::King => KingType::legals::<NotInCheckType>(
+                    &mut movelist,
+                    &board,
+                    mask,
+                    Some(chess_move.get_source()),
+                ),
             }
         } else if checkers.popcnt() == 1 {
             match piece {
-                Piece::Pawn => PawnType::legals::<InCheckType>(&mut movelist, &board, mask),
-                Piece::Knight => KnightType::legals::<InCheckType>(&mut movelist, &board, mask),
-                Piece::Bishop => BishopType::legals::<InCheckType>(&mut movelist, &board, mask),
-                Piece::Rook => RookType::legals::<InCheckType>(&mut movelist, &board, mask),
-                Piece::Queen => QueenType::legals::<InCheckType>(&mut movelist, &board, mask),
-                Piece::King => KingType::legals::<InCheckType>(&mut movelist, &board, mask),
+                Piece::Pawn => PawnType::legals::<InCheckType>(
+                    &mut movelist,
+                    &board,
+                    mask,
+                    Some(chess_move.get_source()),
+                ),
+                Piece::Knight => KnightType::legals::<InCheckType>(
+                    &mut movelist,
+                    &board,
+                    mask,
+                    Some(chess_move.get_source()),
+                ),
+                Piece::Bishop => BishopType::legals::<InCheckType>(
+                    &mut movelist,
+                    &board,
+                    mask,
+                    Some(chess_move.get_source()),
+                ),
+                Piece::Rook => RookType::legals::<InCheckType>(
+                    &mut movelist,
+                    &board,
+                    mask,
+                    Some(chess_move.get_source()),
+                ),
+                Piece::Queen => QueenType::legals::<InCheckType>(
+                    &mut movelist,
+                    &board,
+                    mask,
+                    Some(chess_move.get_source()),
+                ),
+                Piece::King => KingType::legals::<InCheckType>(
+                    &mut movelist,
+                    &board,
+                    mask,
+                    Some(chess_move.get_source()),
+                ),
             }
         } else {
             if matches!(piece, Piece::King) {
-                KingType::legals::<InCheckType>(&mut movelist, &board, mask);
+                KingType::legals::<InCheckType>(&mut movelist, &board, mask, None);
             }
         };
 

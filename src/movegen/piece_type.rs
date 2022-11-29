@@ -16,8 +16,12 @@ pub trait PieceType {
     fn into_piece() -> Piece;
     fn pseudo_legals(src: Square, color: Color, combined: BitBoard, mask: BitBoard) -> BitBoard;
     #[inline(always)]
-    fn legals<T>(movelist: &mut MoveList, board: &Board, mask: BitBoard)
-    where
+    fn legals<T>(
+        movelist: &mut MoveList,
+        board: &Board,
+        mask: BitBoard,
+        from_square: Option<Square>,
+    ) where
         T: CheckType,
     {
         let combined = board.combined();
@@ -25,7 +29,12 @@ pub trait PieceType {
         let my_pieces = board.color_combined(color);
         let ksq = board.king_square(color);
 
-        let pieces = board.pieces(Self::into_piece()) & my_pieces;
+        let from_mask = match from_square {
+            Some(from) => BitBoard::from_square(from),
+            None => *my_pieces,
+        };
+
+        let pieces = board.pieces(Self::into_piece()) & from_mask;
         let pinned = board.pinned();
         let checkers = board.checkers();
 
@@ -127,8 +136,12 @@ impl PieceType for PawnType {
     }
 
     #[inline(always)]
-    fn legals<T>(movelist: &mut MoveList, board: &Board, mask: BitBoard)
-    where
+    fn legals<T>(
+        movelist: &mut MoveList,
+        board: &Board,
+        mask: BitBoard,
+        from_square: Option<Square>,
+    ) where
         T: CheckType,
     {
         let combined = board.combined();
@@ -136,7 +149,12 @@ impl PieceType for PawnType {
         let my_pieces = board.color_combined(color);
         let ksq = board.king_square(color);
 
-        let pieces = board.pieces(Self::into_piece()) & my_pieces;
+        let from_mask = match from_square {
+            Some(from) => BitBoard::from_square(from),
+            None => *my_pieces,
+        };
+
+        let pieces = board.pieces(Self::into_piece()) & from_mask;
         let pinned = board.pinned();
         let checkers = board.checkers();
 
@@ -224,8 +242,12 @@ impl PieceType for KnightType {
     }
 
     #[inline(always)]
-    fn legals<T>(movelist: &mut MoveList, board: &Board, mask: BitBoard)
-    where
+    fn legals<T>(
+        movelist: &mut MoveList,
+        board: &Board,
+        mask: BitBoard,
+        from_square: Option<Square>,
+    ) where
         T: CheckType,
     {
         let combined = board.combined();
@@ -233,7 +255,12 @@ impl PieceType for KnightType {
         let my_pieces = board.color_combined(color);
         let ksq = board.king_square(color);
 
-        let pieces = board.pieces(Self::into_piece()) & my_pieces;
+        let from_mask = match from_square {
+            Some(from) => BitBoard::from_square(from),
+            None => *my_pieces,
+        };
+
+        let pieces = board.pieces(Self::into_piece()) & from_mask;
         let pinned = board.pinned();
         let checkers = board.checkers();
 
@@ -344,8 +371,12 @@ impl PieceType for KingType {
     }
 
     #[inline(always)]
-    fn legals<T>(movelist: &mut MoveList, board: &Board, mask: BitBoard)
-    where
+    fn legals<T>(
+        movelist: &mut MoveList,
+        board: &Board,
+        mask: BitBoard,
+        from_square: Option<Square>, // ignored
+    ) where
         T: CheckType,
     {
         let combined = board.combined();

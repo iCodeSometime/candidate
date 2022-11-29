@@ -854,6 +854,10 @@ impl Board {
         MoveGen::legal_unsanitized(self, m)
     }
 
+    pub fn legal_destinations_from(&self, square: Square) -> BitBoard {
+        MoveGen::legal_destinations_from(self, square)
+    }
+
     /// Make a chess move onto a new board.
     ///
     /// panic!() if king is captured.
@@ -1130,4 +1134,30 @@ fn test_null_move_en_passant() {
     let expected =
         Board::from_str("rnbqkbnr/pppp2pp/8/4pP2/8/8/PPPP1PPP/RNBQKBNR b KQkq - 0 0").unwrap();
     assert_eq!(start.null_move().unwrap(), expected);
+}
+
+#[test]
+fn test_legal_destinations_from() {
+    use crate::magic::line;
+    let board = Board::default();
+    let expected = EMPTY;
+    assert_eq!(board.legal_destinations_from(Square::D1), expected);
+    let expected = BitBoard::from_square(Square::D3) | BitBoard::from_square(Square::D4);
+    assert_eq!(board.legal_destinations_from(Square::D2), expected);
+    let expected = BitBoard::from_square(Square::A3) | BitBoard::from_square(Square::C3);
+    assert_eq!(board.legal_destinations_from(Square::B1), expected);
+
+    let board =
+        Board::from_str("rnbqkbnr/pp1p1ppp/8/2pPp3/8/8/PPP1PPPP/RNBQKBNR w KQkq e6 0 3").unwrap();
+    let expected = BitBoard::from_square(Square::D6) | BitBoard::from_square(Square::E6);
+    let board = board.legal_destinations_from(Square::D5);
+    assert_eq!(board, expected); // en passant
+
+    let board = Board::from_str("8/2k5/8/8/4q3/8/1K6/8 w - - 2 35").unwrap();
+    let expected = (line(Square::E1, Square::E8)
+        | line(Square::A4, Square::H4)
+        | line(Square::B1, Square::H7)
+        | line(Square::A8, Square::H1))
+        & !BitBoard::from_square(Square::E4);
+    assert_eq!(board.legal_destinations_from(Square::E4), expected); // unrestricted queen
 }
