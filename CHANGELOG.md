@@ -1,3 +1,6 @@
+v0.0.5
+ - Fixed castling san generation
+
 v0.0.4
  - Added `Board::legal_destinations_from` to get the bitboard representing all legal destinations from a given square.
 
