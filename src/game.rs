@@ -4,6 +4,7 @@ use crate::color::Color;
 use crate::error::Error;
 use crate::movegen::MoveGen;
 use crate::piece::Piece;
+use std::borrow::Borrow;
 use std::str::FromStr;
 #[cfg(any(feature = "instrument_game", feature = "instrument_all"))]
 use tracing::instrument;
@@ -389,6 +390,18 @@ impl Game {
         let piece = initial_board
             .piece_on(chess_move.get_source())
             .expect("the move is valid");
+
+        // if the move is a castle, return the appropriate string
+        if piece == Piece::King
+            && chess_move.get_source().get_file() == crate::file::File::E
+            && chess_move.get_dest().get_rank() == chess_move.get_source().get_rank()
+        {
+            if chess_move.get_dest().get_file() == crate::file::File::G {
+                return "O-O".to_string();
+            } else if chess_move.get_dest().get_file() == crate::file::File::C {
+                return "O-O-O".to_string();
+            }
+        }
         if piece != Piece::Pawn {
             san.push(
                 // white is uppercase??
@@ -645,10 +658,22 @@ pub fn test_make_move() {
         (ChessMove::new(Square::D5, Square::E6, None), "dxe6"), // en passant
         (ChessMove::new(Square::D8, Square::H4, None), "Qh4"),
         (ChessMove::new(Square::C4, Square::D5, None), "Qd5"),
-        (ChessMove::new(Square::H4, Square::D4, None), "Qxd4"),
-        (ChessMove::new(Square::E6, Square::D7, None), "exd7+"),
-        (ChessMove::new(Square::E8, Square::E7, None), "Ke7"),
-        (ChessMove::new(Square::D7, Square::D8, Some(Piece::Queen)), "d8=Q#"),
+        (ChessMove::new(Square::F8, Square::B4, None), "Bb4+"),
+        (ChessMove::new(Square::C1, Square::D2, None), "Bd2"),
+        (ChessMove::new(Square::E8, Square::G8, None), "O-O"),
+        (ChessMove::new(Square::B1, Square::C3, None), "Nc3"),
+        (ChessMove::new(Square::H4, Square::H6, None), "Qh6"),
+        (ChessMove::new(Square::E1, Square::C1, None), "O-O-O"),
+        (ChessMove::new(Square::H6, Square::H4, None), "Qh4"),
+        (ChessMove::new(Square::E6, Square::D7, None), "exd7"),
+        (ChessMove::new(Square::H4, Square::H3, None), "Qh3"),
+        (ChessMove::new(Square::D7, Square::D8, Some(Piece::Queen)), "d8=Q"),
+        (ChessMove::new(Square::F8, Square::D8, None), "Rxd8"),
+        (ChessMove::new(Square::C3, Square::B1, None), "Nb1"),
+        (ChessMove::new(Square::B4, Square::D2, None), "Bxd2+"),
+        (ChessMove::new(Square::B1, Square::D2, None), "Nxd2"),
+        (ChessMove::new(Square::H3, Square::D3, None), "Qd3"),
+        (ChessMove::new(Square::D5, Square::D8, None), "Qxd8#"),
     ];
 
     for (mv, expected_san) in move_list.iter() {
@@ -656,7 +681,16 @@ pub fn test_make_move() {
         if (*expected_san).len() == 0 {
             assert_eq!(san, None);
         } else {
-            assert_eq!(san.unwrap(), *expected_san);
+            assert_eq!(
+                san,
+                Some(expected_san.to_string()),
+                "\n'{}' for move: '{}' didn't match the expected san ({}). position: \n{}",
+                san.clone().unwrap_or_default(),
+                mv,
+                expected_san,
+                game.current_position().color_combined(Color::White)
+                    | game.current_position().color_combined(Color::Black)
+            );
         }
     }
 }
